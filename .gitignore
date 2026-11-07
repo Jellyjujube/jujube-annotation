@@ -1,0 +1,16 @@
+# 打包扩展用的私钥。manifest.json 里的 key 字段是它的公钥，用于固定扩展 ID；
+# 私钥只在打 .crx 分发时需要，绝不能提交 —— 泄露后可被他人签出同 ID 的扩展包。
+*.pem
+*.crx
+
+# 打包产物
+dist/
+*.zip
+
+# 依赖
+node_modules/
+
+# 编辑器 / 系统
+.DS_Store
+.vscode/
+.idea/

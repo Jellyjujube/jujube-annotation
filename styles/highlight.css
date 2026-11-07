@@ -1,0 +1,89 @@
+/* ==========================================================================
+   页面级高亮样式
+   ==========================================================================
+
+   这个文件走 manifest 的 content_scripts.css 数组注入。
+
+   关于 CSP：content script 注入的样式**不受页面 CSP 的 style-src 限制**。
+   Chromium 的设计规则（isolated_world_csp.h 原文）是
+   "Resources embedded into the main world's DOM from script executed in an
+   isolated world should be restricted based on the isolated world's CSP, not
+   the main world's"，而 MV3 隔离世界的 CSP 里根本没有 style-src。
+   （真正会被拦的是注入**内联 `<script>`**，那会被扩展自己的隔离世界 CSP 挡掉。）
+
+   走 manifest 而非 JS 注入，纯粹是工程偏好：不碰 DOM、document_start 就生效。
+
+   ⚠️ 明暗主题由 CSS 媒体查询处理，**不需要 JS 重新注册 highlight**。
+   颜色由 `::highlight()` 规则决定，注册时只决定「名字 → range 集合」的映射。
+   所以主题切换是纯 CSS 行为，没有中间状态、不会闪。
+
+   ⚠️ 这里内置了 HA.PALETTE 的 6 个默认颜色。如果改了 lib/constants.js 里的
+   调色板，这里要同步改；用户自定义的额外颜色由 renderer.js 动态注入补齐。
+   ========================================================================== */
+
+/* --- 默认 6 色的浅色主题 ------------------------------------------------- */
+/* 浅色下同时指定文字颜色，保证对比度 —— 这样无论页面自己是什么配色都清晰可读 */
+
+::highlight(ha-yellow) { background-color: #ffe066; color: #1a1a1a; }
+::highlight(ha-green)  { background-color: #a8e6a3; color: #1a1a1a; }
+::highlight(ha-blue)   { background-color: #a5d8ff; color: #1a1a1a; }
+::highlight(ha-pink)   { background-color: #ffb3c6; color: #1a1a1a; }
+::highlight(ha-purple) { background-color: #d0bfff; color: #1a1a1a; }
+::highlight(ha-orange) { background-color: #ffc078; color: #1a1a1a; }
+
+/* --- 深色主题 ------------------------------------------------------------ */
+/* 深色下用半透明，让页面自身的浅色文字保持可读，不强行改 color */
+
+@media (prefers-color-scheme: dark) {
+  ::highlight(ha-yellow) { background-color: rgba(255, 214, 51, .30); color: inherit; }
+  ::highlight(ha-green)  { background-color: rgba(105, 219, 124, .28); color: inherit; }
+  ::highlight(ha-blue)   { background-color: rgba(77, 171, 247, .30);  color: inherit; }
+  ::highlight(ha-pink)   { background-color: rgba(247, 131, 172, .28); color: inherit; }
+  ::highlight(ha-purple) { background-color: rgba(151, 117, 250, .30); color: inherit; }
+  ::highlight(ha-orange) { background-color: rgba(255, 146, 43, .28);  color: inherit; }
+}
+
+/* --- 下划线开关（纯背景色对色盲用户无效，提供额外通道） ------------------ */
+
+html.ha-underline ::highlight(ha-yellow),
+html.ha-underline ::highlight(ha-green),
+html.ha-underline ::highlight(ha-blue),
+html.ha-underline ::highlight(ha-pink),
+html.ha-underline ::highlight(ha-purple),
+html.ha-underline ::highlight(ha-orange) {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+/* --- 正在编辑 / 悬停的那一条 ------------------------------------------- */
+/* 用一个独立的高 priority Highlight 表达，而不是给每个颜色都加规则。
+   高亮叠加时**只有冲突的属性**受 priority 影响，不冲突的属性两边都生效 ——
+   所以这里只写 text-decoration，背景色仍然来自下面那条颜色规则。 */
+
+::highlight(ha-active) {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+}
+
+/* --- 悬停在高亮上时的光标 ------------------------------------------------- */
+/* ::highlight() 伪元素不生成盒子、不参与命中测试（spec 明确规定是纯 paint 层），
+   所以光标只能由 JS 命中测试后切换一个 class。
+   直接改 body.style.cursor 会污染页面，用 class 更干净。 */
+
+html.ha-hovering,
+html.ha-hovering * {
+  cursor: pointer !important;
+}
+
+/* --- 高亮定位后的闪烁提示 ------------------------------------------------- */
+/* 侧边栏点某条标注时，让它闪一下，方便在长页面里找到 */
+
+@keyframes ha-flash {
+  0%, 100% { background-color: transparent; }
+  50%      { background-color: rgba(255, 214, 51, .85); }
+}
+
+.ha-flash-target {
+  animation: ha-flash .25s ease-in-out 4;
+  border-radius: 3px;
+}

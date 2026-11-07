@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="sidepanel.title">网页标注</title>
+  <link rel="stylesheet" href="../styles/app.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<header class="panel-head">
+  <div class="panel-heading">
+    <h1 class="panel-title" id="page-title" data-i18n="sidepanel.pageTitle">当前页面</h1>
+    <div class="panel-sub">
+      <span class="mono" id="page-count">—</span>
+      <span class="mono panel-site" id="page-site"></span>
+    </div>
+  </div>
+  <button type="button" class="btn btn-quiet btn-sm" id="btn-manage"
+          data-i18n="common.manage" data-i18n-title="sidepanel.manageTitle">
+    管理
+  </button>
+</header>
+
+<div class="panel-folder hidden" id="site-folder-bar">
+  <span class="eyebrow" data-i18n="sidepanel.folderLabel">默认目录</span>
+  <select class="select select-sm" id="site-folder"
+          data-i18n-aria-label="sidepanel.folderAria" aria-label="新标注默认归档到的目录"></select>
+</div>
+
+<div class="panel-body" id="list" tabindex="-1"></div>
+
+<footer class="panel-foot">
+  <span class="mono" id="foot-hint"></span>
+  <button type="button" class="btn btn-quiet btn-sm" id="btn-settings" data-i18n="common.settings">设置</button>
+</footer>
+
+<div class="toast-host" id="toasts" role="status" aria-live="polite"></div>
+
+<script src="../lib/constants.js"></script>
+<script src="../lib/i18n.js"></script>
+<script src="../lib/url.js"></script>
+<script src="../lib/schema.js"></script>
+<script src="../lib/model.js"></script>
+<script src="../lib/db.js"></script>
+<script src="../lib/settings.js"></script>
+<script src="../lib/messaging.js"></script>
+<script src="../lib/ui-kit.js"></script>
+<script src="index.js"></script>
+</body>
+</html>

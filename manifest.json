@@ -1,0 +1,82 @@
+{
+  "manifest_version": 3,
+  "name": "网页标注 · Highlight & Annotate",
+  "version": "0.1.0",
+  "description": "像看 PDF 一样高亮网页上选中的文字。标注按网站整理，可搜索、可导出 Markdown。",
+  "minimum_chrome_version": "114",
+
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk9LDoX1uieY+4b+JULICNB2nOxl+CtTfNzmnyZh9HCI4iSkJzxZyS4KftuzgvnCJEHJWN2UDdiA/3dsG4bItnlyzuhIDaVvmfcVBkFsJV0F3VMkFu6FdgayAphAv8sw8EerxCd41PyOfP0owacMnoHSZci8KgzueNIpJ/i8NOOgI0s0iR3qXWhn9dJf9wWAUMGxZeT0vh0YBr2QD0vU2cIBY1iuKPcxs19cO+Reo5Ep6cpO5vtkjwuQm1Ciw3/Yyi6qrBUVusYIaKIPBu0iXifMuM8IitVPOJnVqHHxaoJ80ruZ8yWaoTXGCigy0DSiGRIhJF12uP5nB2HGeCFQK/QIDAQAB",
+
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "sidePanel",
+    "contextMenus",
+    "webNavigation"
+  ],
+
+  "optional_permissions": ["downloads"],
+
+  "host_permissions": ["<all_urls>"],
+
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+
+  "action": {
+    "default_title": "网页标注（点击打开侧边栏）",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+
+  "side_panel": {
+    "default_path": "sidepanel/index.html"
+  },
+
+  "options_ui": {
+    "page": "options/index.html",
+    "open_in_tab": true
+  },
+
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "all_frames": false,
+      "run_at": "document_idle",
+      "css": ["styles/highlight.css"],
+      "js": [
+        "lib/constants.js",
+        "lib/i18n.js",
+        "lib/url.js",
+        "lib/schema.js",
+        "lib/model.js",
+        "lib/settings.js",
+        "lib/messaging.js",
+        "lib/text-index.js",
+        "lib/xpath.js",
+        "lib/quote-search.js",
+        "lib/anchoring.js",
+        "content/store.js",
+        "content/host.js",
+        "content/renderer.js",
+        "content/hit-test.js",
+        "content/selection.js",
+        "content/ui.js",
+        "content/click-router.js",
+        "content/observer.js",
+        "content/bootstrap.js"
+      ]
+    }
+  ]
+}

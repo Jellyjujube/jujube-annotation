@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="options.title">网页标注</title>
+  <link rel="stylesheet" href="../styles/app.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<header class="page-head">
+  <h1 class="page-title" data-i18n="options.title">设置</h1>
+  <a class="btn btn-quiet btn-sm" href="../manager/index.html" data-i18n="options.openManager">打开管理页 →</a>
+</header>
+
+<main class="page">
+
+  <!-- ==================== 标注方式 ==================== -->
+  <section class="section">
+    <h2 class="section-title" data-i18n="options.howTo">标注方式</h2>
+    <div class="keys">
+      <div class="key-row">
+        <span class="kbd" id="kbd-modifier">Ctrl</span>
+        <span data-i18n="options.selectText">选中文字</span>
+        <span class="muted" data-i18n="options.wayInstant">立即高亮</span>
+      </div>
+      <div class="key-row">
+        <span class="kbd" data-i18n="options.wayToolbarKey">选中</span>
+        <span data-i18n="options.wayToolbarTitle">弹出工具条</span>
+        <span class="muted" data-i18n="options.wayToolbar">点颜色才保存</span>
+      </div>
+      <div class="key-row">
+        <span class="kbd" data-i18n="options.contextMenu">右键</span>
+        <span data-i18n="options.selectText">选中文字</span>
+        <span class="muted" data-i18n="options.wayContext">自选颜色</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 标注设置 ==================== -->
+  <section class="section">
+    <h2 class="section-title" data-i18n="options.annotation">标注设置</h2>
+
+    <div class="setting">
+      <div class="setting-main">
+        <div class="setting-label" data-i18n="options.triggerMode">触发方式</div>
+        <p class="setting-hint" id="trigger-hint"></p>
+      </div>
+      <div class="choice-row" id="trigger-mode" role="group" data-i18n-aria-label="options.triggerMode">
+        <button type="button" class="chip" data-value="instant" data-i18n="options.triggerInstant">选中即高亮</button>
+        <button type="button" class="chip" data-value="toolbar" data-i18n="options.triggerToolbar">选中后弹工具条</button>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-main">
+        <div class="setting-label" data-i18n="options.modifier">配合哪个修饰键</div>
+        <p class="setting-hint" id="modifier-hint"></p>
+      </div>
+      <select class="select setting-control" id="modifier">
+        <option value="auto" data-i18n="options.modifierAuto">自动（Mac 用 Cmd，其他用 Ctrl）</option>
+        <option value="ctrl" data-i18n="options.modifierCtrl">Ctrl</option>
+        <option value="meta" data-i18n="options.modifierMeta">Cmd / Win</option>
+        <option value="alt" data-i18n="options.modifierAlt">Alt / Option</option>
+        <option value="none" data-i18n="options.modifierNone">不需要修饰键</option>
+      </select>
+    </div>
+
+    <div class="setting setting-block">
+      <div class="setting-main">
+        <div class="setting-label" data-i18n="options.defaultColor">默认颜色</div>
+        <p class="setting-hint" data-i18n="options.defaultColorHint">选中即高亮时用的颜色，也是右键菜单里排在第一位的颜色。</p>
+      </div>
+      <div class="swatch-row" id="colors" role="radiogroup" data-i18n-aria-label="options.defaultColor"></div>
+    </div>
+
+    <label class="setting setting-toggle">
+      <div class="setting-main">
+        <div class="setting-label" data-i18n="options.underline">额外加下划线</div>
+        <p class="setting-hint" data-i18n="options.underlineHint">纯背景色对色盲用户无效。打开后会同时加下划线，多一条识别通道。</p>
+      </div>
+      <span class="switch">
+        <input type="checkbox" id="underline">
+        <span class="switch-track"></span>
+      </span>
+    </label>
+
+    <label class="setting setting-toggle">
+      <div class="setting-main">
+        <div class="setting-label" data-i18n="options.showOrphans">在侧边栏显示「未定位」的标注</div>
+        <p class="setting-hint" data-i18n="options.showOrphansHint">页面改动后有些标注会找不到原文。关掉可以让列表干净些，但那些标注仍然保留在库里，随时可以在管理页找到。</p>
+      </div>
+      <span class="switch">
+        <input type="checkbox" id="show-orphans">
+        <span class="switch-track"></span>
+      </span>
+    </label>
+
+    <div class="setting">
+      <div class="setting-main">
+        <div class="setting-label" data-i18n="options.language">界面语言</div>
+        <p class="setting-hint" data-i18n="options.languageHint">只影响扩展自己的界面，不影响浏览器和网页。</p>
+      </div>
+      <select class="select setting-control" id="language">
+        <option value="auto" data-i18n="options.languageAuto">跟随浏览器</option>
+        <option value="zh" data-i18n="options.languageZh">中文</option>
+        <option value="en" data-i18n="options.languageEn">English</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- ==================== 数据 ==================== -->
+  <section class="section">
+    <h2 class="section-title" data-i18n="options.data">数据</h2>
+
+    <div class="stats" id="stats">
+      <div class="stat">
+        <div class="stat-value mono" id="stat-count">—</div>
+        <div class="stat-label" data-i18n="options.annotationsLabel">条标注</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value mono" id="stat-sites">—</div>
+        <div class="stat-label" data-i18n="options.sitesLabel">个网站</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value mono" id="stat-usage">—</div>
+        <div class="stat-label" data-i18n="options.usageLabel">占用空间</div>
+      </div>
+    </div>
+
+    <div class="storage-note">
+      <div class="storage-note-head">
+        <span class="setting-label" data-i18n="options.storageTitle">数据存在哪里</span>
+        <span class="badge" id="backup-age">—</span>
+      </div>
+
+      <p class="setting-hint">
+        <span data-i18n="options.storageIntro1">存在浏览器分配给我们这个扩展的独立存储里。它</span><strong data-i18n="options.storageIntroBold">不会被「清除浏览数据」清掉</strong><span data-i18n="options.storageIntro2">，关浏览器、重启电脑、甚至断电崩溃都不影响。物理位置在 Chrome 的用户配置目录内，这个位置扩展改不了，Chrome 也不支持移动它。</span>
+      </p>
+
+      <details class="storage-path">
+        <summary data-i18n="options.viewPath">查看实际路径</summary>
+        <p class="setting-hint">
+          <span data-i18n="options.pathHint">如果想自己确认或备份整个目录，可以到下面这个位置找。路径中的</span>
+          <code id="ext-id"></code>
+          <span data-i18n="options.pathHintSuffix">是扩展的固定 ID。</span>
+        </p>
+        <div class="path-box">
+          <code id="storage-path"></code>
+          <button type="button" class="btn btn-sm" id="btn-copy-path" data-i18n="options.copy">复制</button>
+        </div>
+      </details>
+
+      <div class="callout">
+        <div class="callout-title" data-i18n="options.whenLost">什么情况下会丢</div>
+        <ul class="callout-list">
+          <li>
+            <strong data-i18n="options.lostUninstall">卸载扩展</strong>
+            <span data-i18n="options.lostUninstallDesc">浏览器会连带删除该扩展的全部存储。卸载前请先导出备份。</span>
+          </li>
+          <li>
+            <strong data-i18n="options.lostProfile">换 Chrome 用户配置，或换浏览器</strong>
+            <span data-i18n="options.lostProfileDesc">数据跟着配置走，Edge / Brave 各存各的。</span>
+          </li>
+          <li data-i18n="options.lostClear">清空扩展数据（需要在扩展详情页单独操作）。</li>
+        </ul>
+        <p class="setting-hint" data-i18n="options.backupAdvice">所以建议偶尔导出一份备份文件，扔进网盘或 Git 都行 —— 那同时也等于实现了跨设备迁移。</p>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <button type="button" class="btn" id="btn-backup" data-i18n="options.exportBackup">导出备份</button>
+      <button type="button" class="btn" id="btn-restore" data-i18n="options.restore">从备份恢复</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn btn-danger" id="btn-clear" data-i18n="options.clearAll">清空全部数据</button>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast-host" id="toasts" role="status" aria-live="polite"></div>
+<div id="dialog-host"></div>
+
+<script src="../lib/constants.js"></script>
+<script src="../lib/i18n.js"></script>
+<script src="../lib/url.js"></script>
+<script src="../lib/schema.js"></script>
+<script src="../lib/model.js"></script>
+<script src="../lib/db.js"></script>
+<script src="../lib/settings.js"></script>
+<script src="../lib/messaging.js"></script>
+<script src="../lib/export-markdown.js"></script>
+<script src="../lib/export-json.js"></script>
+<script src="../lib/fs-save.js"></script>
+<script src="../lib/ui-kit.js"></script>
+<script src="index.js"></script>
+</body>
+</html>

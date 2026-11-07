@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="manager.title">网页标注</title>
+  <link rel="stylesheet" href="../styles/app.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<!-- ==================== 顶栏 ==================== -->
+<header class="masthead">
+  <div class="masthead-brand">
+    <span class="masthead-mark" aria-hidden="true"></span>
+    <h1 class="masthead-title" data-i18n="manager.title">网页标注</h1>
+    <span class="masthead-count mono" id="total-count"></span>
+  </div>
+
+  <div class="masthead-tools">
+    <div class="search">
+      <input
+        type="search"
+        id="search"
+        class="input search-input"
+        data-i18n-placeholder="manager.searchPlaceholder" placeholder="搜索原文、备注、标签…"
+        autocomplete="off"
+        data-i18n-aria-label="manager.searchAria" aria-label="搜索标注">
+      <span class="search-hint kbd">/</span>
+    </div>
+
+    <button type="button" class="btn" id="btn-backup" data-i18n="common.backup">备份</button>
+    <button type="button" class="btn btn-primary" id="btn-export" data-i18n="manager.exportMarkdown">导出 Markdown</button>
+  </div>
+</header>
+
+<!-- ==================== 主体 ==================== -->
+<div class="shell">
+
+  <!-- 左侧导航 -->
+  <aside class="rail" aria-label="筛选" data-i18n-aria-label="manager.filters">
+    <nav class="rail-section" aria-label="目录" data-i18n-aria-label="folder.title">
+      <div class="rail-head">
+        <div class="eyebrow rail-heading" data-i18n="folder.title">目录</div>
+        <button
+          type="button"
+          class="rail-add"
+          id="btn-new-folder"
+          data-i18n-title="folder.new"
+          data-i18n-aria-label="folder.new"
+          title="新建目录"
+          aria-label="新建目录">+</button>
+      </div>
+      <ul class="rail-list" id="folder-list"></ul>
+    </nav>
+
+    <nav class="rail-section" aria-label="按标签" data-i18n-aria-label="manager.tags">
+      <div class="eyebrow rail-heading" data-i18n="manager.tags">标签</div>
+      <div class="tag-cloud" id="tag-cloud"></div>
+      <p class="rail-empty muted hidden" id="tag-empty" data-i18n="manager.noTags">还没有用过标签</p>
+    </nav>
+
+    <nav class="rail-section" aria-label="按颜色" data-i18n-aria-label="manager.colors">
+      <div class="eyebrow rail-heading" data-i18n="manager.colors">颜色</div>
+      <div class="color-filter" id="color-filter"></div>
+    </nav>
+
+    <div class="rail-foot">
+      <button type="button" class="btn btn-quiet btn-sm" id="btn-options" data-i18n="common.settings">设置</button>
+    </div>
+  </aside>
+
+  <!-- 内容区 -->
+  <main class="content" id="content" tabindex="-1">
+    <div class="filter-bar hidden" id="filter-bar">
+      <span class="filter-summary" id="filter-summary"></span>
+      <div class="row">
+        <button type="button" class="btn btn-quiet btn-sm" id="btn-clear-filter" data-i18n="manager.clearFilter">清除筛选</button>
+      </div>
+    </div>
+
+    <div id="results"></div>
+  </main>
+</div>
+
+<!-- 选中若干条时的批量操作条 -->
+<div class="selection-bar hidden" id="selection-bar">
+  <span class="selection-count" id="selection-count"></span>
+  <button type="button" class="btn btn-quiet btn-sm" id="btn-select-all" data-i18n="manager.selectAll">全选当前结果</button>
+  <span class="spacer"></span>
+  <button type="button" class="btn btn-quiet btn-sm" id="btn-clear-selection" data-i18n="manager.clearSelection">取消选择</button>
+  <button type="button" class="btn btn-primary btn-sm" id="btn-delete-selected" data-i18n="manager.deleteSelected">删除选中</button>
+</div>
+
+<div class="toast-host" id="toasts" role="status" aria-live="polite"></div>
+<div id="dialog-host"></div>
+
+<!-- ==================== 脚本 ====================
+     MV3 扩展页面的 CSP 是 script-src 'self'，
+     所以不允许内联脚本，必须全部走外部文件。 -->
+<script src="../lib/constants.js"></script>
+<script src="../lib/i18n.js"></script>
+<script src="../lib/url.js"></script>
+<script src="../lib/schema.js"></script>
+<script src="../lib/model.js"></script>
+<script src="../lib/db.js"></script>
+<script src="../lib/settings.js"></script>
+<script src="../lib/messaging.js"></script>
+<script src="../lib/export-markdown.js"></script>
+<script src="../lib/export-json.js"></script>
+<script src="../lib/fs-save.js"></script>
+<script src="../lib/ui-kit.js"></script>
+<script src="index.js"></script>
+</body>
+</html>

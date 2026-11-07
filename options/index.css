@@ -1,0 +1,270 @@
+/* ==========================================================================
+   设置页
+   ========================================================================== */
+
+body {
+  background: var(--paper);
+  padding-bottom: 80px;
+}
+
+.page-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--pad-4);
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--pad-6) var(--pad-5) var(--pad-4);
+}
+
+.page-title { font-size: 26px; letter-spacing: -0.02em; }
+
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 var(--pad-5);
+}
+
+/* --------------------------------------------------------------------------
+   分节
+   -------------------------------------------------------------------------- */
+
+.section { margin-bottom: var(--pad-6); }
+
+.section-title {
+  font-size: 15px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--ink);
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: var(--pad-2);
+}
+
+.section-lead { margin: 10px 0 14px; }
+
+/* --------------------------------------------------------------------------
+   单个设置项 —— 两栏：说明在左，控件在右
+   -------------------------------------------------------------------------- */
+
+.setting {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--pad-5);
+  padding: 15px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.setting:last-of-type { border-bottom: none; }
+
+/* 当前触发方式用不到这项设置时整行压暗 */
+.setting.is-disabled { opacity: .5; }
+.setting.is-disabled .select { cursor: not-allowed; }
+
+.setting-block {
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+.setting-main { min-width: 0; }
+
+.setting-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.setting-hint {
+  margin: 5px 0 0;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-muted);
+  max-width: 46em;
+}
+.setting-hint strong { color: var(--ink-soft); font-weight: 600; }
+.setting-hint code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--paper-sunken);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.setting-control { width: 250px; }
+
+.choice-row { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.setting-toggle { cursor: pointer; }
+
+.swatch-row { display: flex; gap: 7px; margin-top: 12px; }
+.swatch-row .swatch-btn > .swatch { width: 30px; height: 30px; border-radius: 7px; }
+
+/* --------------------------------------------------------------------------
+   统计
+   -------------------------------------------------------------------------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: var(--pad-4) 0;
+}
+
+.stat {
+  background: var(--paper-raised);
+  padding: var(--pad-4);
+}
+
+.stat-value {
+  font-size: 21px;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-top: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   存储说明
+   -------------------------------------------------------------------------- */
+
+.storage-note {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: var(--pad-5);
+  background: var(--paper-raised);
+}
+
+.storage-note-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pad-3);
+  margin-bottom: 4px;
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--paper-sunken);
+  color: var(--ink-muted);
+  border: 1px solid var(--rule);
+  white-space: nowrap;
+}
+.badge.is-stale {
+  background: rgba(180, 130, 20, .12);
+  color: #8a6510;
+  border-color: rgba(180, 130, 20, .3);
+}
+@media (prefers-color-scheme: dark) {
+  .badge.is-stale { background: rgba(220, 180, 80, .16); color: #d8bb72; }
+}
+
+/* 存储路径 */
+.storage-path {
+  margin-top: 14px;
+  font-size: 12px;
+}
+.storage-path summary {
+  cursor: pointer;
+  color: var(--ink-soft);
+  font-size: 12px;
+  padding: 5px 0;
+}
+.storage-path summary:hover { color: var(--ink); }
+
+.path-box {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-2);
+  margin-top: 9px;
+  padding: 9px 11px;
+  background: var(--paper-sunken);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.path-box code {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  word-break: break-all;
+}
+
+/* 警示框 */
+.callout {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-left: 3px solid var(--rule-strong);
+  background: var(--paper-sunken);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.callout-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 7px;
+}
+
+.callout-list {
+  margin: 0;
+  padding-left: 17px;
+  font-size: 12px;
+  line-height: 1.75;
+  color: var(--ink-muted);
+}
+.callout-list li { margin-bottom: 3px; }
+.callout-list strong { color: var(--ink-soft); font-weight: 600; }
+
+/* --------------------------------------------------------------------------
+   操作行
+   -------------------------------------------------------------------------- */
+
+.actions-row {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-2);
+  margin-top: var(--pad-4);
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   快捷键表
+   -------------------------------------------------------------------------- */
+
+.keys {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: var(--pad-2);
+}
+
+.key-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px var(--pad-4);
+  border-bottom: 1px solid var(--rule);
+  font-size: 12px;
+  background: var(--paper-raised);
+}
+.key-row:last-child { border-bottom: none; }
+.key-row .muted { margin-left: auto; font-size: 11px; text-align: right; }
+
+@media (max-width: 640px) {
+  .setting { grid-template-columns: 1fr; gap: var(--pad-3); }
+  .setting-control { width: 100%; }
+  .stats { grid-template-columns: 1fr; }
+}
